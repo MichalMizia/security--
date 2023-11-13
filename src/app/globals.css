@@ -3,10 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --blue-600: #3590f3;
+  --blue-400: #62bfed;
+  --blue-200: #62bfed;
+  --purple-600: #c2bbf0;
+  --blue-300: #f1e3f3;
 }
 
 .container-md {
+  width: min(92%, 1080px);
+  margin-inline: auto;
+}
+@media (min-width: 1280px) {
+  .container-md {
+    width: min(90%, 1380px);
+  }
 }
