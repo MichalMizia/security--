@@ -33,7 +33,7 @@ export default async function Home() {
   const documents = await getData(session.user._id);
 
   return (
-    <main className="min-h-[calc(100vh-67px)]">
+    <main className="min-h-[calc(100vh-70px)]">
       <section className="container-md">
         <header className="py-6 flex items-center justify-between">
           <div className="space-y-1">

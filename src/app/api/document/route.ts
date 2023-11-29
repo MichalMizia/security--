@@ -4,6 +4,7 @@ import initMongoose from "@/lib/db/db";
 import { DocumentModel } from "@/model/document";
 import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
+import { getRandomPin } from "@/lib/utils";
 
 interface ReqType {
   title: string;
@@ -56,12 +57,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
   }
 
+  // random 4 digit num
+  const randomPin = getRandomPin("0123456789", 4);
+
   try {
     await DocumentModel.create({
       userId: session.user._id,
       title,
       description,
       category,
+      pin: randomPin,
     });
   } catch (e) {
     return NextResponse.json(

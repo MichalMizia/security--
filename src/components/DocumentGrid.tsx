@@ -105,7 +105,21 @@ export const columns: ColumnDef<IDocument>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-right">Created At</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="outlined"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          {column.getIsSorted() === "asc" ? (
+            <SortDescIcon className="ml-2 h-4 w-4" />
+          ) : (
+            <SortAscIcon className="ml-2 h-4 w-4" />
+          )}
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const createdAt: Date = row.getValue("createdAt");
 
@@ -117,6 +131,7 @@ export const columns: ColumnDef<IDocument>[] = [
   {
     id: "actions",
     enableHiding: false,
+    header: () => <div className="">Actions</div>,
     cell: ({ row }) => {
       return (
         <DropdownMenu>

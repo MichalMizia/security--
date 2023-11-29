@@ -66,7 +66,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
   }
 
   return (
-    <div className="flex-1 self-center py-10">
+    <div className="flex-1 self-center py-10 min-h-full flex items-center">
       <div className="mx-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-black">

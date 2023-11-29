@@ -57,11 +57,11 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className="flex-1 self-center py-10">
-      <div className="mx-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4">
+    <div className="flex-1 self-center py-10 min-h-full flex items-center">
+      <div className="m-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-black">
-            Create an account
+            Login to your account
           </h1>
           <p className="px-8 text-center text-sm text-slate-500"></p>
         </div>
