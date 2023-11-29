@@ -9,12 +9,9 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-slate-950 text-white hover:bg-slate-800",
-        inverse: "bg-slate-50 text-black hover:bg-slate-200",
         text: "hover:bg-slate-200",
         primary:
-          "bg-blue-500 rounded-[4px] text-white hover-circle-overlay border-blue-500 border-2 relative overflow-hidden",
-        primary_outlined:
-          "bg-slate-100 rounded-[4px] border-2 text-black border-solid border-blue-500 hover:bg-slate-200 transition-colors",
+          "font-[400] bg-dark-blue after:absolute relative after:w-full after:h-full after:inset-0 after:bg-dark-violet/20 hover:after:translate-x-full overflow-hidden after:transition-all after:duration-300 text-white rounded-lg border-2 border-dark-violet/20 shadow-md shadow-dark-violet/40",
         outlined:
           "bg-slate-100 border-2 border-solid border-slate-200 hover:bg-slate-200 hover:border-slate-300 transition-colors",
       },

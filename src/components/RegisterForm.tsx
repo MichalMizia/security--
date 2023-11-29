@@ -60,7 +60,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
       setIsLoading(false);
     }
 
-    toast.success("Zarejestrowano użytkownika");
+    toast.success("Signed up successfully");
     router.refresh();
     router.push("/login");
   }

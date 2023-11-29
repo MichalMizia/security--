@@ -11,7 +11,6 @@ interface ReqType {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const { username, email, password }: ReqType = await req.json();
-  console.log(username, email, password);
 
   try {
     await initMongoose();

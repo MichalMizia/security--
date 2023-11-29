@@ -12,7 +12,7 @@ declare module "next-auth" {
     username: string;
   }
 
-  interface Session extends DefaultSession {
+  interface Session extends Omit<DefaultSession, "user"> {
     user: User;
   }
 }
