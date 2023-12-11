@@ -1,7 +1,7 @@
 "use client";
 
 import { IDocument } from "@/model/document";
-import React from "react";
+import React, { useState } from "react";
 import Button from "./ui/button";
 import {
   DropdownMenu,
@@ -47,6 +47,10 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { PasswordInput } from "./ui/password-input";
+import { getRandomPin } from "@/lib/utils";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 interface DocumentGridProps {
   documents: IDocument[];
@@ -133,28 +137,49 @@ export const columns: ColumnDef<IDocument>[] = [
     enableHiding: false,
     header: () => <div className="">Actions</div>,
     cell: ({ row }) => {
+      const [showAccessDocumentDropdown, setShowAccessDocumentDropdown] =
+        useState<boolean>(false);
+
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outlined" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Access Document</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(row.getValue("title"))
-              }
-            >
-              Copy Title
-            </DropdownMenuItem>
-            <DropdownMenuItem>Edit Document</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <Dialog
+            open={showAccessDocumentDropdown}
+            onOpenChange={setShowAccessDocumentDropdown}
+          >
+            <DialogContent>
+              <PasswordInput value={getRandomPin("0123456789", 6)} />
+            </DialogContent>
+          </Dialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowAccessDocumentDropdown((prev) => !prev);
+                }}
+              >
+                Access Document
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(row.getValue("title"))
+                }
+              >
+                Copy Title
+              </DropdownMenuItem>
+              <DropdownMenuItem>Edit Document</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       );
     },
   },

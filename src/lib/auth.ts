@@ -4,7 +4,7 @@ import User, { IUser, UserType } from "@/model/user";
 
 import Credentials from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
-import { GetSessionParams } from "next-auth/react";
+// import { GetSessionParams } from "next-auth/react";
 import { HydratedDocument } from "mongoose";
 
 const authOptions: NextAuthOptions = {
@@ -74,8 +74,8 @@ const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    // Here you can define your own custom pages for login, recover password, etc.
-    signIn: "/login", // we are going to use a custom login page (we'll create this in just a second)
+    // Custom pages for login, recover password, etc.
+    signIn: "/login",
   },
 };
 
