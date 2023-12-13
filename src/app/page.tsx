@@ -30,6 +30,8 @@ export default async function Home() {
     redirect("/login");
   }
 
+  console.log(session);
+
   const documents = await getData(session.user._id);
 
   return (

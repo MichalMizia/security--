@@ -15,7 +15,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     await initMongoose();
   } catch (e) {
-    console.log("Mongoose error: ", e);
     return NextResponse.json(
       { message: "Failed connecting to DB" },
       { status: 500 }

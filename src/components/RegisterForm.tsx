@@ -40,7 +40,6 @@ const RegisterForm = ({}: RegisterFormProps) => {
         email: data.email.toLowerCase(),
         password: data.password,
       });
-      console.log(res);
     } catch (e) {
       if (
         e instanceof AxiosError &&

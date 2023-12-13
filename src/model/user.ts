@@ -11,6 +11,10 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: true,
@@ -36,6 +40,7 @@ export interface UserType {
   username: string;
   email: string;
   password: string;
+  image?: string;
 }
 
 export type IUser = UserType;

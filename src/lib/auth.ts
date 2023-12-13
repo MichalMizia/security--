@@ -3,7 +3,7 @@ import initMongoose from "./db/db";
 import User, { IUser, UserType } from "@/model/user";
 
 import Credentials from "next-auth/providers/credentials";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 // import { GetSessionParams } from "next-auth/react";
 import { HydratedDocument } from "mongoose";
 
@@ -54,11 +54,17 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     // We can pass in additional information from the user document MongoDB returns
     // This could be avatars, role, display name, etc...
-    async jwt({ token, user }) {
+    async jwt({ token, user, session, trigger }) {
       if (user) {
+        token.image = user.image;
         token.email = user.email;
         token._id = user._id;
         token.username = user.username;
+      }
+
+      if (trigger === "update" && session?.image?.length) {
+        console.log(token, session);
+        token.image = session.image;
       }
 
       return token;
@@ -69,6 +75,7 @@ const authOptions: NextAuthOptions = {
         session.user._id = token._id;
         session.user.username = token.username;
         session.user.email = token.email;
+        session.user.image = token.image;
       }
       return session;
     },

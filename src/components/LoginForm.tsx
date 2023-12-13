@@ -42,8 +42,6 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 
     setIsLoading(false);
 
-    console.log(signInResult);
-
     if (!signInResult?.ok) {
       if (signInResult?.error) {
         return toast.error(signInResult.error);

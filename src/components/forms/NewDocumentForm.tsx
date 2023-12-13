@@ -57,9 +57,7 @@ const NewDocumentForm = ({ dialogTrigger }: NewDocumentFormProps) => {
         description: data.description,
         category: data.category,
       });
-      console.log(res);
     } catch (e) {
-      console.log(e);
       if (
         e instanceof AxiosError &&
         e.response?.status?.toString()[0] === "4" &&

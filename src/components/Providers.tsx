@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { XIcon } from "lucide-react";
+import { SessionProvider } from "next-auth/react";
 import { ReactNode, useEffect, useState } from "react";
 import { ToastBar, Toaster, toast } from "react-hot-toast";
 
@@ -24,14 +25,14 @@ const Providers = ({ children }: ProvidersProps) => {
   }, []);
 
   return (
-    <>
+    <SessionProvider>
       <Toaster position="top-center" reverseOrder={false}>
         {(t) => <ToastBar toast={t}></ToastBar>}
       </Toaster>
       <div className={`animate-container ${active ? "active" : ""}`}>
         {children}
       </div>
-    </>
+    </SessionProvider>
   );
 };
 

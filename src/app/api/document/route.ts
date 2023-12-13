@@ -17,8 +17,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const session = await getServerSession(authOptions);
 
-  console.log(session);
-
   if (!session?.user?._id) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 403 });
   }
@@ -26,7 +24,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     await initMongoose();
   } catch (e) {
-    console.log("Mongoose error: ", e);
     return NextResponse.json(
       { message: "Failed connecting to DB" },
       { status: 500 }
