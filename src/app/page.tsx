@@ -12,6 +12,7 @@ import NewDocumentForm from "@/components/forms/NewDocumentForm";
 import { HydratedDocument } from "mongoose";
 import { DocumentModel, IDocument } from "@/model/document";
 import initMongoose from "@/lib/db/db";
+import { Suspense } from "react";
 
 const getData = async (id: string): Promise<IDocument[] | null> => {
   await initMongoose();
@@ -30,7 +31,7 @@ export default async function Home() {
     redirect("/login");
   }
 
-  console.log(session);
+  console.log("Session: ", session);
 
   const documents = await getData(session.user._id);
 
@@ -43,8 +44,10 @@ export default async function Home() {
               Documents - {session?.user.username}
             </h3>
             <p className="text-sm text-zinc-700">
-              Browse documents Lorem ipsum dolor, sit amet consectetur
-              adipisicing elit. Autem, optio!
+              Browse your documents.{" "}
+              {session.user.image
+                ? "Two factor authentication enabled ✅"
+                : "Enable two factor authentication for better security"}
             </p>
           </div>
           <NewDocumentForm
@@ -57,7 +60,9 @@ export default async function Home() {
           />
         </header>
 
-        <DocumentGrid documents={documents || []} />
+        <Suspense fallback={<div>...Loading documents</div>}>
+          <DocumentGrid session={session} documents={documents || []} />
+        </Suspense>
       </section>
     </main>
   );

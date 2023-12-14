@@ -19,9 +19,12 @@ export default async function Home() {
         <header className="py-6 flex items-center justify-between">
           <div className="space-y-1">
             <h3 className="text-2xl font-semibold text-black">
-              Face detection - {session?.user.username}
+              Upload face image - {session?.user.username}
             </h3>
-            <p className="text-sm text-zinc-700"></p>
+            <p className="text-sm text-zinc-700">
+              This will be used later for authorization purposes when accessing
+              documents.
+            </p>
           </div>
         </header>
         <FaceUpload />

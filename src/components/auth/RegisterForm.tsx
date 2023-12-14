@@ -15,6 +15,7 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { validateError } from "@/lib/validateError";
 
 interface RegisterFormProps {}
 
@@ -35,26 +36,17 @@ const RegisterForm = ({}: RegisterFormProps) => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/signup", {
+      await axios.post("/api/signup", {
         username: data.username,
         email: data.email.toLowerCase(),
         password: data.password,
       });
     } catch (e) {
-      if (
-        e instanceof AxiosError &&
-        e.response?.status?.toString()[0] === "4" &&
-        e.response?.data?.message
-      ) {
-        toast.error(e.response.data.message);
-        return null;
-      } else if (e instanceof ZodError) {
-        toast.error("Form filled out incorrectly");
-        return null;
-      } else {
-        toast.error("Something went wrong during registration");
-        return null;
-      }
+      const message = validateError(
+        e,
+        "Something went wrong during registration"
+      );
+      return toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -151,7 +143,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
             <span className="w-full border-t border-slate-300" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-bg px-2 text-slate-600">OR</span>
+            <span className="bg-bg px-2 text-slate-600 bg-zinc-100">OR</span>
           </div>
         </div>
 

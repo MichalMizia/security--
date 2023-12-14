@@ -1,7 +1,6 @@
 export const stopStreamedVideo = (video: HTMLVideoElement) => {
   video.pause();
-  // @ts-expect-error
-  const tracks: any[] = video.srcObject?.getTracks() || [];
+  const tracks = (video.srcObject as MediaStream).getTracks() || [];
 
   tracks.forEach((track) => {
     track.stop();

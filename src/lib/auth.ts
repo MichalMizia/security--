@@ -55,6 +55,9 @@ const authOptions: NextAuthOptions = {
     // We can pass in additional information from the user document MongoDB returns
     // This could be avatars, role, display name, etc...
     async jwt({ token, user, session, trigger }) {
+      if (trigger == "signIn") {
+        token.isFaceAuthorized = false;
+      }
       if (user) {
         token.image = user.image;
         token.email = user.email;
@@ -62,9 +65,29 @@ const authOptions: NextAuthOptions = {
         token.username = user.username;
       }
 
-      if (trigger === "update" && session?.image?.length) {
-        console.log(token, session);
-        token.image = session.image;
+      // If more than a certain period of time has passed, set the boolean value back to false
+      if (
+        token.isFaceAuthorized &&
+        Date.now() - Number(token.isFaceAuthorizedSetAt) > 1000 * 60 * 60 // 60 minutes is the max time for the face auth
+      ) {
+        token.isFaceAuthorized = false;
+      }
+
+      if (trigger === "update") {
+        if (session?.image?.length) {
+          token.image = session.image;
+        }
+
+        if (session?.resetFaceAuthorization) {
+          token.isFaceAuthorized = false;
+          token.isFaceAuthorizedSetAt = undefined;
+        }
+
+        // If the isFaceAuthorized value is set to true, store the current timestamp
+        if (session?.isFaceAuthorized) {
+          token.isFaceAuthorized = true;
+          token.isFaceAuthorizedSetAt = Date.now();
+        }
       }
 
       return token;
@@ -76,6 +99,8 @@ const authOptions: NextAuthOptions = {
         session.user.username = token.username;
         session.user.email = token.email;
         session.user.image = token.image;
+
+        session.user.isFaceAuthorized = token.isFaceAuthorized || false;
       }
       return session;
     },

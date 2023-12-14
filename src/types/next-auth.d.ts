@@ -5,6 +5,8 @@ interface IUser extends Omit<DefaultUser, "name" | "id"> {
   _id: string;
   username: string;
   image?: string;
+  isFaceAuthorized: boolean;
+  isFaceAuthorizedSetAt?: Date | null;
 }
 
 declare module "next-auth" {
@@ -12,6 +14,7 @@ declare module "next-auth" {
     _id: string;
     username: string;
     image?: string;
+    isFaceAuthorized: boolean;
   }
 
   interface Session extends Omit<DefaultSession, "user"> {
@@ -20,5 +23,7 @@ declare module "next-auth" {
 }
 
 declare module "next-auth/JWT" {
-  interface JWT extends IUser {}
+  interface JWT extends IUser {
+    isFaceAuthorized: boolean;
+  }
 }

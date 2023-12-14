@@ -1,7 +1,7 @@
 "use client";
 
 import { IDocument } from "@/model/document";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Button from "./ui/button";
 import {
   DropdownMenu,
@@ -47,14 +47,9 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { PasswordInput } from "./ui/password-input";
-import { getRandomPin } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-
-interface DocumentGridProps {
-  documents: IDocument[];
-}
+import { Session } from "next-auth";
+import AccessDocumentDialogContent from "./AccessDocumentDialogContent";
 
 export const columns: ColumnDef<IDocument>[] = [
   {
@@ -136,7 +131,7 @@ export const columns: ColumnDef<IDocument>[] = [
     id: "actions",
     enableHiding: false,
     header: () => <div className="">Actions</div>,
-    cell: ({ row }) => {
+    cell: function Cell({ row }) {
       const [showAccessDocumentDropdown, setShowAccessDocumentDropdown] =
         useState<boolean>(false);
 
@@ -147,7 +142,9 @@ export const columns: ColumnDef<IDocument>[] = [
             onOpenChange={setShowAccessDocumentDropdown}
           >
             <DialogContent>
-              <PasswordInput value={getRandomPin("0123456789", 6)} />
+              <Suspense fallback={<div>...Loading</div>}>
+                <AccessDocumentDialogContent />
+              </Suspense>
             </DialogContent>
           </Dialog>
           <DropdownMenu>
@@ -185,7 +182,12 @@ export const columns: ColumnDef<IDocument>[] = [
   },
 ];
 
-const DocumentGrid = ({ documents }: DocumentGridProps) => {
+interface DocumentGridProps {
+  documents: IDocument[];
+  session: Session;
+}
+
+const DocumentGrid = ({ documents, session }: DocumentGridProps) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

@@ -18,13 +18,13 @@ const Navbar = async ({}: NavbarProps) => {
   return (
     <header className="py-4 border-b bg-white border-black/30 shadow-md">
       <div className="flex container-md items-center justify-between">
-        <div className="flex items-center justify-start gap-3">
+        <div className="flex items-center justify-start gap-2">
           {session?.user.image && (
             <div className="flex relative aspect-square h-10 overflow-hidden items-center justify-center rounded-full border border-violet-300 bg-blue-400 p-1 shadow-lg shadow-[#00000030]">
               <img
                 alt="Avatar"
                 src={session?.user.image}
-                className="w-full h-full inset-0 absolute z-10"
+                className="w-full object-cover h-full inset-0 absolute z-10"
               />
             </div>
           )}
@@ -33,18 +33,20 @@ const Navbar = async ({}: NavbarProps) => {
           </a>
         </div>
         <nav className="flex items-center justify-end">
-          <ul className="flex mr-2 items-center justify-end">
-            <li className="">
-              <Button variant="text">
-                <a href="/face-upload">Face Upload</a>
-              </Button>
-            </li>
-            <li className="">
-              <Button variant="text">
-                <a href="/face">Face Detection</a>
-              </Button>
-            </li>
-          </ul>
+          {session?.user && (
+            <ul className="flex mr-2 items-center justify-end">
+              <li className="">
+                <Button variant="text">
+                  <a href="/upload-face">Face Upload</a>
+                </Button>
+              </li>
+              <li className="">
+                <Button variant="text">
+                  <a href="/authorize-face">Face Authorization</a>
+                </Button>
+              </li>
+            </ul>
+          )}
           <LoginButton session={session} />
         </nav>
       </div>

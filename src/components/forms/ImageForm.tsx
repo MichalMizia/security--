@@ -15,11 +15,12 @@ import {
 import Button from "@/components/ui/button";
 import { HTMLAttributes, ReactNode, memo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { cn } from "@/lib/utils";
 import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
 import Image from "next/image";
-import { ChevronLeft, ImageIcon } from "lucide-react";
+import { ImageIcon } from "lucide-react";
+import { validateError } from "@/lib/validateError";
 
 interface ImageFormProps extends HTMLAttributes<HTMLDivElement> {
   photoUrl: string;
@@ -27,7 +28,6 @@ interface ImageFormProps extends HTMLAttributes<HTMLDivElement> {
   imageClassName?: string;
   children: ReactNode;
   formTitle?: string;
-  defaultSuccessMessage?: string;
   defaultErrorMessage?: string;
 }
 
@@ -40,7 +40,6 @@ const ImageForm = ({
   children,
   imageClassName,
   formTitle,
-  defaultSuccessMessage,
   defaultErrorMessage,
   ...props
 }: ImageFormProps) => {
@@ -65,40 +64,28 @@ const ImageForm = ({
     formData.append("images", data.files[0]);
 
     try {
-      const res = await axios.post("/api/upload", formData, {
+      await axios.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      // const url = res.data.resultURLS[0];
-      // if (!url) {
-      //   throw new Error();
-      // }
+
+      // result is ok
+      const filepath = `${process.env.NEXT_PUBLIC_BASE_URL}uploads/${data.files[0].name}`;
+      setPhotoUrl(filepath);
     } catch (e) {
-      console.log(e);
-
-      if (
-        e instanceof AxiosError &&
-        e.response?.status?.toString()[0] === "4" &&
-        e.response?.data?.message
-      ) {
-        return toast.error(e.response.data.message);
-      } else if (e instanceof z.ZodError) {
-        return toast.error("Form filled out incorrectly");
-      }
-
-      return toast.error(
-        defaultErrorMessage || "Something went wrong when adding the photo"
+      const message = validateError(
+        e,
+        defaultErrorMessage || "Something went wrong when uploading the photo"
       );
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
-
-    toast.success(defaultSuccessMessage || "Dodano zdjęcie");
   }
 
   const currentFiles: FileList | null = watch("files") || null;
 
   return (
-    <Card className="max-w-md">
+    <Card className="max-w-md" {...props}>
       <CardContent className="max-w-[460px] sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="static">
           <CardHeader>
