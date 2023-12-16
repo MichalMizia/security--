@@ -1,20 +1,16 @@
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
-import {
-  Body,
-  Button,
-  Head,
-  Html,
-  Tailwind,
-  Text,
-} from "@react-email/components";
+import { Body, Button, Head, Html, Text } from "@react-email/components";
 import { render } from "@react-email/render";
+import { Tailwind } from "@react-email/tailwind";
 
 const Email = ({ url }: { url: string }) => {
   return (
     <Html>
       <Tailwind>
-        <Head />
+        <Head>
+          <title>Reset Face Verification Image</title>
+        </Head>
         <Body>
           <Text className="arial mb-4 text-base text-black dark:text-white">
             Change face image for 2-factor authentication using the link below

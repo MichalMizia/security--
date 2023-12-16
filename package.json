@@ -19,6 +19,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@react-email/components": "^0.0.12",
     "@react-email/render": "^0.0.10",
+    "@react-email/tailwind": "^0.0.13",
     "@tanstack/react-table": "^8.10.7",
     "@tensorflow/tfjs": "^4.15.0",
     "@tensorflow/tfjs-backend-wasm": "^4.15.0",
