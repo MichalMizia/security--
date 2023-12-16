@@ -7,7 +7,6 @@ export interface IDocument {
   title: string;
   description: string;
   category: string;
-  pin: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,10 +27,6 @@ const documentSchema = new Schema<IDocument>(
       type: String,
     },
     category: {
-      required: true,
-      type: String,
-    },
-    pin: {
       required: true,
       type: String,
     },

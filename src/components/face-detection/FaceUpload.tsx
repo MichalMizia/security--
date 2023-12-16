@@ -5,10 +5,12 @@ import { axiosUpload } from "@/lib/axiosUpload";
 import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface FaceUploadProps {}
 
 const FaceUpload = ({}: FaceUploadProps) => {
+  const router = useRouter();
   const { update } = useSession();
 
   const onSubmit = async ({ file, setIsLoading }: FaceScannerOnSubmitProps) => {
@@ -45,6 +47,8 @@ const FaceUpload = ({}: FaceUploadProps) => {
         image: filepath,
         resetFaceAuthorization: true,
       });
+
+      router.replace("/");
     } else {
       toast.error(data.message);
     }

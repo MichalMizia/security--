@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main>
-      <section className="h-[calc(100vh-70px)] items-center">
+      <section className="h-[calc(100vh-75px)] items-center">
         <RegisterForm />
       </section>
     </main>

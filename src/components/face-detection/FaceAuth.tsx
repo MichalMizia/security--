@@ -6,9 +6,11 @@ import { validateError } from "@/lib/validateError";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 
-interface FaceAuthorizationProps {}
+interface FaceAuthorizationProps {
+  finalCB?: () => void;
+}
 
-const FaceAuthorization = ({}: FaceAuthorizationProps) => {
+const FaceAuthorization = ({ finalCB }: FaceAuthorizationProps) => {
   const { update } = useSession();
 
   const onSubmit = async ({ file, setIsLoading }: FaceScannerOnSubmitProps) => {
@@ -27,6 +29,9 @@ const FaceAuthorization = ({}: FaceAuthorizationProps) => {
       toast.error(message);
     } finally {
       setIsLoading(false);
+      if (finalCB) {
+        finalCB();
+      }
     }
   };
 

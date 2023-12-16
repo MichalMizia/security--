@@ -51,7 +51,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 
     toast.success("Logged In");
     router.refresh();
-    router.push("/");
+    router.push(searchParams?.get("from") || "/");
   }
 
   return (

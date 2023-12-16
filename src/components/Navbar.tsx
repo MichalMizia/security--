@@ -40,11 +40,11 @@ const Navbar = async ({}: NavbarProps) => {
                   <a href="/upload-face">Face Upload</a>
                 </Button>
               </li>
-              <li className="">
+              {/* <li className="">
                 <Button variant="text">
                   <a href="/authorize-face">Face Authorization</a>
                 </Button>
-              </li>
+              </li> */}
             </ul>
           )}
           <LoginButton session={session} />

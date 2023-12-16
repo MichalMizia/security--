@@ -70,8 +70,6 @@ const FaceScanner = ({ onSubmit }: FaceScannerProps) => {
     Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
       faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-      faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-      faceapi.nets.faceExpressionNet.loadFromUri("/models"),
     ]);
   };
 
@@ -129,8 +127,7 @@ const FaceScanner = ({ onSubmit }: FaceScannerProps) => {
   ) => {
     const detection = await faceapi
       .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks()
-      .withFaceDescriptor();
+      .withFaceLandmarks();
     const resizedDetection = faceapi.resizeResults(detection, displaySize);
 
     return resizedDetection;
@@ -139,13 +136,11 @@ const FaceScanner = ({ onSubmit }: FaceScannerProps) => {
   const drawDetections = (
     canvas: HTMLCanvasElement,
     detections:
-      | faceapi.WithFaceDescriptor<
-          faceapi.WithFaceLandmarks<
-            {
-              detection: faceapi.FaceDetection;
-            },
-            faceapi.FaceLandmarks68
-          >
+      | faceapi.WithFaceLandmarks<
+          {
+            detection: faceapi.FaceDetection;
+          },
+          faceapi.FaceLandmarks68
         >
       | never[]
   ) => {

@@ -4,8 +4,9 @@ import { requestHandler } from "@/lib/requestHandler";
 import axios, { AxiosResponse } from "axios";
 import { PasswordInput } from "./ui/password-input";
 import { DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
+import FaceUpload from "./face-detection/FaceUpload";
 import FaceAuthorization from "./face-detection/FaceAuth";
-import { Suspense } from "react";
+import { Suspense, useReducer } from "react";
 
 interface AccessDocumentDialogContentProps {}
 
@@ -19,6 +20,8 @@ export const getPin = requestHandler<undefined, Response>((params) =>
 
 const AccessDocumentDialogContent =
   async ({}: AccessDocumentDialogContentProps) => {
+    // reducer to force update to this component
+    const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
     const data = await getPin();
 
     if (data.code == "error") {
@@ -29,7 +32,7 @@ const AccessDocumentDialogContent =
               {(data.error.response as AxiosResponse).data.message}
             </p>
             <Suspense fallback={<div>...Loading face auth</div>}>
-              <FaceAuthorization />
+              <FaceAuthorization finalCB={() => forceUpdate()} />
             </Suspense>
           </>
         );

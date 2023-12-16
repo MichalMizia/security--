@@ -1,8 +1,8 @@
-import Image from "next/image";
+import { headers } from "next/headers";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { RedirectType, redirect, useRouter } from "next/navigation";
 // components
 import Button from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
@@ -28,15 +28,13 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/login");
+    redirect(`/login?from=/`);
   }
-
-  console.log("Session: ", session);
 
   const documents = await getData(session.user._id);
 
   return (
-    <main className="min-h-[calc(100vh-70px)]">
+    <main className="min-h-[calc(100vh-75px)]">
       <section className="container-md">
         <header className="py-6 flex items-center justify-between">
           <div className="space-y-1">

@@ -1,7 +1,7 @@
 "use client";
 
 import { IDocument } from "@/model/document";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import Button from "./ui/button";
 import {
   DropdownMenu,
@@ -49,7 +49,9 @@ import {
 } from "./ui/table";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Session } from "next-auth";
-import AccessDocumentDialogContent from "./AccessDocumentDialogContent";
+const AccessDocumentDialogContent = lazy(
+  () => import("./AccessDocumentDialogContent")
+);
 
 export const columns: ColumnDef<IDocument>[] = [
   {
