@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build:local": "next build",
-    "build": "setup.sh && next build",
+    "build": "sh setup.sh && next build",
     "start": "next start",
     "lint": "next lint"
   },
