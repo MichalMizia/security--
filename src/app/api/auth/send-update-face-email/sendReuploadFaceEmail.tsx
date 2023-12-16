@@ -5,8 +5,6 @@ import {
   Button,
   Head,
   Html,
-  Link,
-  Preview,
   Tailwind,
   Text,
 } from "@react-email/components";
@@ -14,9 +12,8 @@ import { render } from "@react-email/render";
 
 const Email = ({ url }: { url: string }) => {
   return (
-    <Tailwind>
-      <Head />
-      <Html>
+    <Html>
+      <Tailwind>
         <Head />
         <Body>
           <Text className="arial mb-4 text-base text-black dark:text-white">
@@ -29,8 +26,8 @@ const Email = ({ url }: { url: string }) => {
             Reupload Face Image
           </Button>
         </Body>
-      </Html>
-    </Tailwind>
+      </Tailwind>
+    </Html>
   );
 };
 
