@@ -23,10 +23,8 @@ export default async function Page({
 
   const { token, userId } = params;
 
-  const pathname = headers().get("x-pathname") || "";
-
   if (!session || session.user._id != userId) {
-    redirect(`/login?from=${pathname}`);
+    redirect(`/login`);
   }
 
   try {
