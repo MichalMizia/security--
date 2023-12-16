@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import * as tf from "@tensorflow/tfjs";
 import * as faceapi from "@vladmandic/face-api/dist/face-api.esm-nobundle.js";
-import * as canvas from "canvas";
+// import * as canvas from "canvas/build";
+const canvas = require("canvas");
 
 export async function POST(request: NextRequest) {
   // verify the session
