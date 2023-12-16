@@ -2,7 +2,7 @@ import User, { IUser } from "@/model/user";
 import initMongoose from "@/lib/db/db";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { sendResetPasswordEmail } from "./sendResetPasswordEmail";
+import { sendReuploadFaceEmail } from "./sendReuploadFaceEmail";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const url = `${process.env.BASE_URL}/upload-face/${user_token}/${user._id}`;
 
-    await sendResetPasswordEmail(email, url);
+    await sendReuploadFaceEmail(email, url);
   } catch (e) {
     console.log(e);
     return NextResponse.json({}, { status: 400 });

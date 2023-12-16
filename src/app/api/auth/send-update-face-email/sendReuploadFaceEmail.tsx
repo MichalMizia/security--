@@ -17,12 +17,13 @@ const Email = ({ url }: { url: string }) => {
     <Tailwind>
       <Head />
       <Html>
+        <Head />
         <Body>
           <Text className="arial mb-4 text-base text-black dark:text-white">
             Change face image for 2-factor authentication using the link below
           </Text>
           <Button
-            className="rounded bg-[#000000] text-center text-[12px] font-semibold text-white no-underline"
+            className="rounded-sm px-3 py-2 bg-[#000000] text-center text-[12px] font-semibold text-white no-underline"
             href={url}
           >
             Reupload Face Image
@@ -33,7 +34,7 @@ const Email = ({ url }: { url: string }) => {
   );
 };
 
-export async function sendResetPasswordEmail(sendTo: string, url: string) {
+export async function sendReuploadFaceEmail(sendTo: string, url: string) {
   const sendFrom = process.env.NODEMAILER_EMAIL;
   const password = process.env.NODEMAILER_PW;
 
@@ -58,7 +59,6 @@ export async function sendResetPasswordEmail(sendTo: string, url: string) {
     from: sendFrom,
     to: sendTo,
     subject: "Reupload Face Image",
-    // html: `<a href="${url}">Kliknij tutaj żeby zmienić hasło</a>`,
     html: emailHtml,
   };
 

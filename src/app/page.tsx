@@ -36,7 +36,7 @@ export default async function Home() {
   return (
     <main className="min-h-[calc(100vh-75px)]">
       <section className="container-md">
-        <header className="py-6 flex items-center justify-between">
+        <header className="py-6 flex md:items-center gap-4 flex-col md:flex-row items-start justify-between">
           <div className="space-y-1">
             <h3 className="text-2xl font-semibold text-black">
               Documents - {session?.user.username}
