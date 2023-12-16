@@ -8,9 +8,9 @@ const Email = ({ url }: { url: string }) => {
   return (
     <Html>
       <Tailwind>
-        <Head>
+        <head>
           <title>Reset Face Verification Image</title>
-        </Head>
+        </head>
         <Body>
           <Text className="arial mb-4 text-base text-black dark:text-white">
             Change face image for 2-factor authentication using the link below
