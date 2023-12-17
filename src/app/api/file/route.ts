@@ -53,8 +53,9 @@ export async function GET(req: NextRequest) {
   }
 
   const files = await bucket.find({ filename }).toArray();
+
   if (!files.length) {
-    return new NextResponse(null, { status: 404, statusText: "Not found" });
+    return new NextResponse(null, { status: 404, statusText: "No such file" });
   }
 
   const file = files.at(0)!;

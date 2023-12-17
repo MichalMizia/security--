@@ -12,6 +12,11 @@ const nextConfig = {
         port: "3000",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "security-michalmizia.vercel.app",
+        pathname: "/api/file?**",
+      },
     ],
   },
 };

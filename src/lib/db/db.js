@@ -43,7 +43,7 @@ async function initMongoose() {
     bucketName: "images",
   });
 
-  return { db: mongoose.connect(MONGODB_URI), bucket: gridFSBucket };
+  return { conn: mongoose.connection, bucket: gridFSBucket };
 }
 
 export default initMongoose;
