@@ -4,17 +4,19 @@ import { ZodError } from "zod";
 interface RetType {
   message: string;
   status: "error" | "success";
+  data?: any;
 }
 
 export const axiosUpload = async (
   formData: FormData,
   finalCallback: () => void,
-  defaultError: string = "Something went wrong"
+  defaultError: string = "Something went wrong",
+  path: string = "/api/file"
 ): Promise<RetType> => {
   let data: RetType = { message: "", status: "success" };
 
   try {
-    await axios.post("/api/upload", formData, {
+    await axios.post(path, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 

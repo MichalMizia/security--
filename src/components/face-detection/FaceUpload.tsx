@@ -24,10 +24,21 @@ const FaceUpload = ({}: FaceUploadProps) => {
       "Could not upload photo"
     );
 
+    // if you want to upload to a local filesystem, use
+    // const data = await axiosUpload(
+    //   formData,
+    //   () => setIsLoading(false),
+    //   "Could not upload photo",
+    //   "/api/upload"
+    // );
+    // then the file path will be:
+    // const filepath = `${process.env.NEXT_PUBLIC_BASE_URL}uploads/${file.name}`;
+    // everything else will behave the same
+
     if (data.status == "success") {
       toast.loading("Photo submitted adding to profile");
 
-      const filepath = `${process.env.NEXT_PUBLIC_BASE_URL}uploads/${file.name}`;
+      const filepath = `${process.env.NEXT_PUBLIC_BASE_URL}api/file?filename=${file.name}`;
 
       // add photo url to mongo db
       axios
@@ -48,7 +59,7 @@ const FaceUpload = ({}: FaceUploadProps) => {
         resetFaceAuthorization: true,
       });
 
-      router.replace("/");
+      // router.replace("/");
     } else {
       toast.error(data.message);
     }

@@ -35,11 +35,15 @@ async function initMongoose() {
   // await mongoose.connection.close();
 
   // in production
-  if (mongoose.connection.readyState === 1) {
-    return mongoose.connection.asPromise();
+  if (mongoose.connection.readyState !== 1) {
+    mongoose.connect(MONGODB_URI);
   }
 
-  return mongoose.connect(MONGODB_URI);
+  const gridFSBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    bucketName: "images",
+  });
+
+  return { db: mongoose.connect(MONGODB_URI), bucket: gridFSBucket };
 }
 
 export default initMongoose;
