@@ -25,10 +25,11 @@ export async function POST(request: NextRequest) {
 
   await tf.setBackend("cpu");
   await tf.ready();
+  const base_url = process.env.BASE_URL as string;
   await Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri("http://localhost:3000/models"),
-    faceapi.nets.faceLandmark68Net.loadFromUri("http://localhost:3000/models"),
-    faceapi.nets.faceRecognitionNet.loadFromUri("http://localhost:3000/models"),
+    faceapi.nets.tinyFaceDetector.loadFromUri(`${base_url}models`),
+    faceapi.nets.faceLandmark68Net.loadFromUri(`${base_url}models`),
+    faceapi.nets.faceRecognitionNet.loadFromUri(`${base_url}models`),
   ]);
 
   try {

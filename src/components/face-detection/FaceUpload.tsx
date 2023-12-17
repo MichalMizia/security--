@@ -59,7 +59,7 @@ const FaceUpload = ({}: FaceUploadProps) => {
         resetFaceAuthorization: true,
       });
 
-      // router.replace("/");
+      router.replace("/");
     } else {
       toast.error(data.message);
     }
