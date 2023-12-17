@@ -36,7 +36,7 @@ async function initMongoose() {
 
   // in production
   if (mongoose.connection.readyState !== 1) {
-    mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI);
   }
 
   const gridFSBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
