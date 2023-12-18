@@ -1,17 +1,16 @@
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
-import { RedirectType, redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 // components
 import Button from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import DocumentGrid from "@/components/DocumentGrid";
-import NewDocumentForm from "@/components/forms/NewDocumentForm";
+import NewDocumentForm from "@/components/forms/document/NewDocumentForm";
 // utils
 import { DocumentModel, IDocument } from "@/model/document";
 import initMongoose from "@/lib/db/db";
 import { Suspense } from "react";
-import TestButton from "@/../.idea/rand_btn";
 
 const getData = async (id: string): Promise<IDocument[] | null> => {
   await initMongoose();
@@ -56,8 +55,6 @@ export default async function Home() {
             }
           />
         </header>
-
-        {/* <TestButton /> */}
 
         <Suspense fallback={<div>...Loading documents</div>}>
           <DocumentGrid session={session} documents={documents || []} />

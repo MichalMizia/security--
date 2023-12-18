@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
-import { Label } from "../ui/label";
+} from "../../ui/dialog";
+import { Label } from "../../ui/label";
 import TextareaAutosize from "react-textarea-autosize";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 // hooks
 import { Controller, useForm } from "react-hook-form";
 // zod
@@ -27,10 +27,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../../ui/select";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import Button from "../ui/button";
+import Button from "../../ui/button";
 
 interface NewDocumentFormProps {
   dialogTrigger?: ReactNode;

@@ -49,6 +49,7 @@ import {
 } from "./ui/table";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Session } from "next-auth";
+import EditDocumentForm from "./forms/document/EditDocumentForm";
 const AccessDocumentDialogContent = lazy(
   () => import("./AccessDocumentDialogContent")
 );
@@ -81,6 +82,13 @@ export const columns: ColumnDef<IDocument>[] = [
     header: "Title",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("title")}</div>
+    ),
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => (
+      <div className="capitalize font-[500]">{row.getValue("category")}</div>
     ),
   },
   {
@@ -175,7 +183,14 @@ export const columns: ColumnDef<IDocument>[] = [
               >
                 Copy Title
               </DropdownMenuItem>
-              <DropdownMenuItem>Edit Document</DropdownMenuItem>
+              <EditDocumentForm
+                dialogTrigger={
+                  <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+                    Edit Document
+                  </DropdownMenuItem>
+                }
+                document={row.original}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </>
