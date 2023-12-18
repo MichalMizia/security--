@@ -39,9 +39,12 @@ async function initMongoose() {
     await mongoose.connect(MONGODB_URI);
   }
 
-  const gridFSBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-    bucketName: "images",
-  });
+  const gridFSBucket = new mongoose.mongo.GridFSBucket(
+    await mongoose.connection.asPromise(),
+    {
+      bucketName: "images",
+    }
+  );
 
   return { conn: mongoose.connection, bucket: gridFSBucket };
 }

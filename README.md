@@ -56,4 +56,4 @@ The most important component for face authorization is FaceScanner.tsx, it strea
 
 When the submit button of this component is clicked. The current frame on the canvas gets turned into a file and passed onto the onSubmit function.
 
-The onSubmit is passed from the parent to FaceScanner.tsx and decides what to do with the file.
+The onSubmit, which decides what to do with the file, is passed from the parent to FaceScanner.tsx

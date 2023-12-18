@@ -43,7 +43,7 @@ const FaceScanner = ({ onSubmit }: FaceScannerProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    tf.setBackend("cpu")
+    tf.setBackend("webgl")
       .then(() => tf.ready().then(() => loadModels()))
       .then(() => startVideo())
       .finally(() => {

@@ -4,8 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 import * as tf from "@tensorflow/tfjs";
 import * as faceapi from "@vladmandic/face-api/dist/face-api.esm-nobundle.js";
-// @ts-expect-error
-import * as canvas from "canvas/index";
+import {
+  Canvas,
+  loadImage,
+  Image as CanvasImage,
+  ImageData as CanvasImageData,
+} from "canvas";
 
 export async function POST(request: NextRequest) {
   // verify the session
@@ -25,23 +29,25 @@ export async function POST(request: NextRequest) {
 
   await tf.setBackend("cpu");
   await tf.ready();
-  const base_url = process.env.BASE_URL as string;
+  const base_url = process.env.NEXT_PUBLIC_BASE_URL as string;
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri(`${base_url}models`),
     faceapi.nets.faceLandmark68Net.loadFromUri(`${base_url}models`),
     faceapi.nets.faceRecognitionNet.loadFromUri(`${base_url}models`),
   ]);
 
+  // console.log(file);
+
   try {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     faceapi.env.monkeyPatch({
-      Canvas: canvas.Canvas,
-      Image: canvas.Image,
-      ImageData: canvas.ImageData,
+      Canvas: Canvas,
+      Image: CanvasImage,
+      ImageData: CanvasImageData,
     } as any);
 
-    const uploaded_img = await canvas.loadImage(buffer);
+    const uploaded_img = await loadImage(buffer);
     if (!uploaded_img) {
       return NextResponse.json(
         { message: "No uploaded image" },
@@ -49,7 +55,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const session_img = await canvas.loadImage(session.user?.image || "");
+    const session_img = await loadImage(session.user?.image || "");
     if (!session_img) {
       return NextResponse.json(
         { message: "No image in current session" },
@@ -69,7 +75,7 @@ export async function POST(request: NextRequest) {
 
     if (!faceMatcher) {
       return NextResponse.json(
-        { message: "Could not match face" },
+        { message: "No face found on the session image" },
         { status: 403 }
       );
     }
@@ -104,6 +110,7 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (e) {
+    console.log(e);
     return NextResponse.json(
       { message: "There was an error during authorization" },
       { status: 403 }
