@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) app, initially built as a school project, but later turned into a fun experiment with face authorization. It uses [@vladmandic/face-api](https://www.npmjs.com/package/@vladmandic/face-api) for AI models used to detect and compare faces.
 
+Presentation video: [Youtube](https://youtu.be/Gcx-pDh5Buc)
+
 ## Getting Started
 
 To get the app working locally, replace variables in .env.example with Your real keys and change the name to .env.local
